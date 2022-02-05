@@ -1,19 +1,18 @@
 import argparse
 import json
 
-def processCmdLineArgs(file):
-    cmdLineDict = json.load(open(file))
+def processCommandLineArgs(file):
+    cmdLineArgsDict = json.load(open(file))
     parserObj = argparse.ArgumentParser(description="Process Command line arguments")
-    for option in cmdLineDict:
-        cmdLineArr = [f"'{option}'"]
-        for optVal in cmdLineDict[option]:
-            if (type(cmdLineDict[option][optVal]) == str):
-                cmdLineArr.append(f"{optVal}='{cmdLineDict[option][optVal]}'")
+    for option in cmdLineArgsDict:
+        cmdLineArgsArr = [f"'{option}'"]
+        for optVal in cmdLineArgsDict[option]:
+            if (type(cmdLineArgsDict[option][optVal]) == str):
+                cmdLineArgsArr.append(f"{optVal}='{cmdLineArgsDict[option][optVal]}'")
             else:
-                cmdLineArr.append(f"{optVal}={cmdLineDict[option][optVal]}")
-        cmdLineStr = ",".join(cmdLineArr)
-
-        cmdLineStr = f"parserObj.add_argument({cmdLineStr})"
-        ret = eval(f"{cmdLineStr}")
+                cmdLineArgsArr.append(f"{optVal}={cmdLineArgsDict[option][optVal]}")
+        cmdLineArgsStr = ",".join(cmdLineArr)
+        cmdLineArgsStr = f"parserObj.add_argument({cmdLineStr})"
+        ret = eval(f"{cmdLineArgsStr}")
     cmdLineArgs = parserObj.parse_args()
     return cmdLineArgs
